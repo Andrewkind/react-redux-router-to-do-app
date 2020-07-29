@@ -30,7 +30,7 @@ store.dispatch( addNewToDo( "Practice Reduxx." ) );
 
 // Set up a "root" for our Router.
 const Root = store => (
-  <Provider store={store}>
+  <Provider store={store.store}>
     <Router>
       <Route path="/" component={App} />
     </Router>
