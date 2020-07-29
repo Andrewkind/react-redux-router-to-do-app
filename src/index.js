@@ -1,8 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './index.css';
 import { addNewToDo } from './actions/todos';
 import toDoReducer from './reducers/todos';
+import Nav from './components/Nav';
 import App from './components/App';
+import About from './components/About';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
@@ -26,16 +29,24 @@ store.subscribe( () => console.log( store.getState() ) ); // Outputs each time a
  */
 store.dispatch( addNewToDo( "Buy milk." ) );
 store.dispatch( addNewToDo( "Practice React." ) );
-store.dispatch( addNewToDo( "Practice Reduxx." ) );
+store.dispatch( addNewToDo( "Practice Redux." ) );
 
 // Set up a "root" for our Router.
-const Root = store => (
+const Root = ( store ) => (
   <Provider store={store.store}>
     <Router>
-      <Route path="/" component={App} />
+      <h1>React Redux Example w/Routing</h1>
+      <Nav />
+      <Route path="/" component={App} exact />
+      <Route path="/about" component={About} />
     </Router>
   </Provider>
 );
+
+// Prop types required.
+Root.propTypes = {
+  store: PropTypes.object.isRequired
+};
 
 // Render the route-enabled configuration.
 render(
