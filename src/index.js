@@ -1,11 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './index.css';
 import { addNewToDo } from './actions/todos';
 import toDoReducer from './reducers/todos';
 import App from './components/App';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { render } from '@testing-library/react';
 
 /**
  * Redux Store
@@ -25,11 +26,19 @@ store.subscribe( () => console.log( store.getState() ) ); // Outputs each time a
  */
 store.dispatch( addNewToDo( "Buy milk." ) );
 store.dispatch( addNewToDo( "Practice React." ) );
-store.dispatch( addNewToDo( "Practice Redux." ) );
+store.dispatch( addNewToDo( "Practice Reduxx." ) );
 
-ReactDOM.render(
+// Set up a "root" for our Router.
+const Root = store => (
   <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root')
+    <Router>
+      <Route path="/" component={App} />
+    </Router>
+  </Provider>
+);
+
+// Render the route-enabled configuration.
+render(
+  <Root store={store} />,
+  document.getElementById( 'root' )
 );
